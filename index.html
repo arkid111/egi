@@ -396,11 +396,14 @@ if (giftOpenedAt && (now - parseInt(giftOpenedAt, 10)) < sevenDays) {
     giftBox.classList.add("clicked");
 
     setTimeout(() => {
-      giftMessage.style.display = "block";
-      playSound();
-      createConfetti(30);
-      createHearts(20);
-    }, 500);
+  // Always set message from current code (GitHub)
+  giftMessage.textContent = "Kidi's Heart!!!"; // CHANGEABLE ANYTIME
+  giftMessage.style.display = "block";
+  playSound();
+  createConfetti(30);
+  createHearts(20);
+}, 500);
+
 
     setTimeout(() => {
       giftSection.style.display = "none";
