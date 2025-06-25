@@ -142,11 +142,66 @@
     opacity: 0;
     transition: opacity 0.6s ease;
   }
+  #gift-section {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+#gift-section h2 {
+  color: #d6336c;
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+#gift-box {
+  width: 100px;
+  height: 100px;
+  background-color: #ff66a3;
+  border-radius: 12px;
+  margin: 0 auto;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+#gift-box::before {
+  content: "";
+  position: absolute;
+  width: 60px;
+  height: 20px;
+  background-color: white;
+  top: -20px;
+  left: 20px;
+  border-radius: 5px 5px 0 0;
+}
+
+#gift-box.clicked {
+  transform: scale(1.5) rotate(15deg);
+  opacity: 0;
+}
+
+#gift-message {
+  display: none;
+  font-size: 1.8rem;
+  color: #5a0b2f;
+  margin-top: 20px;
+  animation: fadeIn 1s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 </style>
 </head>
 <body>
   <!-- Splash Screen that shows for 3 seconds -->
   <div id="splash">
+    <div id="gift-section">
+  <h2>THERE’S A GIFT FOR YOU</h2>
+  <div id="gift-box"></div>
+  <div id="gift-message">Kidi’s Heart ❤️</div>
+</div>
     <h1>WELCOME SWEETHEART!</h1>
   </div>
 
@@ -336,6 +391,28 @@
       "Puçi, your kindness warms my soul.",
       "Puçi, you are the most beautiful person I know.",
       "Puçi, your smile lights up my world."
+      const giftSection = document.getElementById("gift-section");
+const giftBox = document.getElementById("gift-box");
+const giftMessage = document.getElementById("gift-message");
+
+// Check if gift was already opened
+if (localStorage.getItem("giftOpened") === "true") {
+  giftSection.style.display = "none";
+} else {
+  giftBox.addEventListener("click", () => {
+    giftBox.classList.add("clicked");
+
+    setTimeout(() => {
+      giftMessage.style.display = "block";
+    }, 400); // delay message after explosion
+
+    // Hide the whole section after 3 seconds
+    setTimeout(() => {
+      giftSection.style.display = "none";
+      localStorage.setItem("giftOpened", "true");
+    }, 3000);
+  });
+}
     ];
 
     const button = document.getElementById("complimentBtn");
