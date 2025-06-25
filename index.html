@@ -1,15 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <meta charset="UTF-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <!-- Important for iOS home screen app mode -->
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="PUÇI" />
-  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-
   <title>PUÇI</title>
 
   <!-- iPhone Web App Setup -->
@@ -163,6 +156,26 @@
       from { top: -20px; opacity: 1; }
       to { top: 100vh; opacity: 0; }
     }
+
+    /* Mood selector styles */
+    #moodSelector {
+      margin-top: 20px;
+      padding: 10px 15px;
+      font-size: 1.2rem;
+      border-radius: 8px;
+      border: 2px solid #d6336c;
+      background: white;
+      color: #d6336c;
+      cursor: pointer;
+      max-width: 250px;
+      text-align: center;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    #moodSelector:hover, #moodSelector:focus {
+      border-color: #a8274e;
+    }
   </style>
 </head>
 <body>
@@ -178,239 +191,427 @@
 
   <!-- Compliment -->
   <h1>Hey Puçi, need a compliment?</h1>
+
+  <!-- Mood selector -->
+  <select id="moodSelector" aria-label="Select your mood">
+    <option value="sad">Sad</option>
+    <option value="morning" selected>Morning</option>
+    <option value="night">Night</option>
+    <option value="blush">Blush</option>
+    <option value="poetic">Poetic</option>
+    <option value="funny">Funny</option>
+  </select>
+
   <button id="complimentBtn">Click Here! 💕</button>
   <div id="compliment"></div>
 
   <!-- Script -->
   <script>
-    const compliments = [
-      "Puçi, you have the most beautiful smile.",
-      "Puçi, your laugh brightens my day.",
-      "Puçi, you're my favorite person in the world.",
-      "Puçi, every moment with you is magical.",
-      "Puçi, you're stunning inside and out.",
-      "Puçi, you bring joy just by being you.",
-      "Puçi, you have the most beautiful smile.",
-      "Puçi, your laugh brightens my day.",
-      "Puçi, you're my favorite person in the world.",
-      "Puçi, every moment with you is magical.",
-      "Puçi, you make life so much better.",
-      "Puçi, you're stunning inside and out.",
-      "Puçi, I love how kind you are.",
-      "Puçi, you're my sunshine on cloudy days.",
-      "Puçi, your creativity inspires me.",
-      "Puçi, you have a heart of gold.",
-      "Puçi, your presence is calming and comforting.",
-      "Puçi, you are incredibly thoughtful.",
-      "Puçi, you always know how to make me smile.",
-      "Puçi, you are brave and strong.",
-      "Puçi, you bring out the best in people.",
-      "Puçi, your smile lights up any room.",
-      "Puçi, you are deeply loved.",
-      "Puçi, your energy is contagious in the best way.",
-      "Puçi, you are so talented and capable.",
-      "Puçi, you make the world a better place.",
-      "Puçi, I admire your passion and dedication.",
-      "Puçi, your kindness is your superpower.",
-      "Puçi, you have a beautiful soul.",
-      "Puçi, you inspire me to be better every day.",
-      "Puçi, you are my favorite hello and hardest goodbye.",
-      "Puçi, you are enough just as you are.",
-      "Puçi, your laughter is my favorite sound.",
-      "Puçi, you are a wonderful friend and partner.",
-      "Puçi, I am grateful for every moment with you.",
-      "Puçi, you make ordinary moments extraordinary.",
-      "Puçi, you have an amazing sense of humor.",
-      "Puçi, you are courageous beyond words.",
-      "Puçi, you deserve all the happiness in the world.",
-      "Puçi, you make life colorful and bright.",
-      "Puçi, you are an amazing listener.",
-      "Puçi, you have a beautiful mind.",
-      "Puçi, your hugs are the best place to be.",
-      "Puçi, you are a treasure to those who know you.",
-      "Puçi, you are more powerful than you think.",
-      "Puçi, your smile is pure magic.",
-      "Puçi, you are the reason for so many smiles.",
-      "Puçi, you have a heart that shines.",
-      "Puçi, you make the impossible possible.",
-      "Puçi, you are a bright star in my life.",
-      "Puçi, you are my favorite thought every day.",
-      "Puçi, you bring joy just by being you.",
-      "Puçi, your kindness touches everyone you meet.",
-      "Puçi, your intelligence shines brightly.",
-      "Puçi, your passion is truly inspiring.",
-      "Puçi, you have a unique way of making people feel special.",
-      "Puçi, your smile can brighten the darkest days.",
-      "Puçi, your strength amazes me every day.",
-      "Puçi, you have a heart full of love and compassion.",
-      "Puçi, your energy lights up the room.",
-      "Puçi, you always know how to cheer me up.",
-      "Puçi, your laughter is contagious and beautiful.",
-      "Puçi, you are graceful in everything you do.",
-      "Puçi, your dreams inspire me to dream bigger.",
-      "Puçi, you have an incredible sense of style.",
-      "Puçi, your honesty is refreshing and rare.",
-      "Puçi, you are the definition of elegance.",
-      "Puçi, your spirit is unbreakable.",
-      "Puçi, you have the best ideas and creativity.",
-      "Puçi, your presence makes everything better.",
-      "Puçi, you are a blessing to everyone around you.",
-      "Puçi, you make ordinary days extraordinary.",
-      "Puçi, your confidence is admirable.",
-      "Puçi, you are truly one of a kind.",
-      "Puçi, your optimism is inspiring.",
-      "Puçi, you light up my world.",
-      "Puçi, your smile is a ray of sunshine.",
-      "Puçi, you have a heart as big as the universe.",
-      "Puçi, you are gentle yet strong.",
-      "Puçi, your courage motivates me.",
-      "Puçi, you have an amazing way of connecting with people.",
-      "Puçi, your kindness makes the world better.",
-      "Puçi, you are full of wonderful surprises.",
-      "Puçi, your soul shines bright.",
-      "Puçi, you are loved more than words can say.",
-      "Puçi, your laugh is music to my ears.",
-      "Puçi, you are the light in my life.",
-      "Puçi, you inspire kindness in others.",
-      "Puçi, you are the most beautiful person I know.",
-      "Puçi, your heart is pure gold.",
-      "Puçi, you have a brilliant mind.",
-      "Puçi, your smile brings me peace.",
-      "Puçi, you are the greatest gift.",
-      "Puçi, your laughter warms my soul.",
-      "Puçi, you are truly radiant.",
-      "Puçi, your compassion knows no bounds.",
-      "Puçi, you are an incredible listener.",
-      "Puçi, you make every moment memorable.",
-      "Puçi, your spirit is contagious.",
-      "Puçi, you are my source of happiness.",
-      "Puçi, your strength amazes me.",
-      "Puçi, you are my endless inspiration.",
-      "Puçi, your smile is everything to me.",
-      "Puçi, you are my sunshine every day.",
-      "Puçi, your kindness changes lives.",
-      "Puçi, you are the heart of everything good.",
-      "Puçi, you have the most amazing soul.",
-      "Puçi, you inspire me to be the best I can be.",
-      "Puçi, your love fills my heart.",
-      "Puçi, you are my everything.",
-      "Puçi, your laughter is the sweetest sound.",
-      "Puçi, you are a shining star in my life.",
-      "Puçi, your spirit is unstoppable.",
-      "Puçi, you have the most beautiful soul.",
-      "Puçi, your love is a gift I cherish.",
-      "Puçi, you are my forever and always.",
-      "Puçi, your smile lights up my darkest days.",
-      "Puçi, you are the joy in my life.",
-      "Puçi, your courage inspires me every day.",
-      "Puçi, you are my best friend and love.",
-      "Puçi, your kindness brightens the world.",
-      "Puçi, you make every day special.",
-      "Puçi, your heart is full of love.",
-      "Puçi, you are the light in my darkness.",
-      "Puçi, your spirit is full of grace.",
-      "Puçi, you are a treasure beyond measure.",
-      "Puçi, your smile is the key to my happiness.",
-      "Puçi, you are a beautiful soul inside and out.",
-      "Puçi, your love lifts me up.",
-      "Puçi, you make the world a better place.",
-      "Puçi, your laughter is my favorite melody.",
-      "Puçi, you are my heart’s delight.",
-      "Puçi, your spirit shines brighter than stars.",
-      "Puçi, you are my greatest blessing.",
-      "Puçi, your smile is pure magic.",
-      "Puçi, you are the light of my life.",
-      "Puçi, your kindness touches my heart.",
-      "Puçi, you are a gift I cherish forever.",
-      "Puçi, your love is endless and true.",
-      "Puçi, you make every moment magical.",
-      "Puçi, your spirit is beautiful and strong.",
-      "Puçi, you are my heart and soul.",
-      "Puçi, your laughter brings joy to my life.",
-      "Puçi, you are my forever sunshine.",
-      "Puçi, your love is my safe haven.",
-      "Puçi, you brighten every day with your smile.",
-      "Puçi, you are my inspiration and joy.",
-      "Puçi, your kindness knows no limits.",
-      "Puçi, you are my heart’s greatest treasure.",
-      "Puçi, your smile is a blessing to all.",
-      "Puçi, you are my endless source of happiness.",
-      "Puçi, your spirit is as beautiful as you.",
-      "Puçi, you make life so much brighter.",
-      "Puçi, your love fills every corner of my heart.",
-      "Puçi, you are my light in the dark.",
-      "Puçi, your laughter is the sweetest gift.",
-      "Puçi, you are my constant source of joy.",
-      "Puçi, your kindness makes the world shine.",
-      "Puçi, you are my forever and always.",
-      "Puçi, your smile is the sunshine of my life.",
-      "Puçi, you inspire me beyond words.",
-      "Puçi, your love is a beacon of hope.",
-      "Puçi, you are the light that guides me.",
-      "Puçi, your spirit is full of love and light.",
-      "Puçi, you are my heart’s true joy.",
-      "Puçi, your laughter is my favorite sound.",
-      "Puçi, you brighten every moment we share.",
-      "Puçi, your kindness is unmatched and beautiful.",
-      "Puçi, you are the reason for my smiles.",
-      "Puçi, your love makes everything better.",
-      "Puçi, you are my heart’s eternal flame.",
-      "Puçi, your smile is the most beautiful thing I see.",
-      "Puçi, you are my forever love.",
-      "Puçi, your spirit shines brighter than the stars.",
-      "Puçi, you are my greatest happiness.",
-      "Puçi, your laughter fills my heart with joy.",
-      "Puçi, you are my light and my love.",
-      "Puçi, your kindness warms my soul.",
-      "Puçi, you are the most beautiful person I know.",
-      "Puçi, your smile lights up my world."
-    ];
+    const compliments = {
+      sad: [
+        "Even on your toughest days, you shine brighter than the stars.",
+        "It's okay to feel sad — your heart is so strong.",
+        "You have a beauty that glows even through tears.",
+        "Every sad moment makes your smile even more precious.",
+        "Your courage in hard times inspires me every day.",
+        "Sad days don’t last, but your strength does.",
+        "You are loved beyond words, even on gray days.",
+        "Your heart is a brave warrior, never giving up.",
+        "In sadness, you still radiate warmth and kindness.",
+        "Tears are just the rain that helps your soul bloom.",
+        // ... add 40 more compliments for sad mood here
+        "You carry so much grace, even when feeling down.",
+        "Your soul is deeper than any ocean of sorrow.",
+        "Every feeling you have is valid and beautiful.",
+        "Sadness only shows how much you truly care.",
+        "You turn pain into strength in ways others can’t see.",
+        "Your gentle spirit comforts those around you.",
+        "You’re a beacon of hope even in the darkest hours.",
+        "It's okay to rest and heal, you deserve peace.",
+        "Your bravery shines brightest when life is hard.",
+        "Your heart’s resilience is my inspiration.",
+        "Through storms and tears, you remain beautiful.",
+        "You are never alone in how you feel.",
+        "Your kindness outshines any sadness you face.",
+        "You bring light to those who need it most.",
+        "Your inner strength is a gift to this world.",
+        "Sadness is a chapter, not your whole story.",
+        "Your smile will return and brighten the skies.",
+        "You are stronger than any struggle you face.",
+        "Your heart’s depth is a source of endless love.",
+        "Even in tears, your soul sings a beautiful song.",
+        "Your presence comforts those who love you.",
+        "You are precious beyond all measure.",
+        "Your gentle heart is a treasure.",
+        "Sadness teaches us the value of joy, and you embody both.",
+        "You heal with every breath you take.",
+        "Your spirit is unbreakable, even when it hurts.",
+        "Every emotion you feel is part of your beautiful story.",
+        "Your heart is full of love, even on sad days.",
+        "You light up my life, even in your quiet moments.",
+        "Your strength inspires me to be better.",
+        "You’re more than your sadness, you’re pure light.",
+        "You are deeply cared for, always.",
+        "Your soul is resilient and full of hope.",
+        "You are my hero in every season.",
+        "Even clouds part for your smile."
+      ],
+      morning: [
+        "Good morning, Puçi! Your smile starts my day perfectly.",
+        "Rise and shine, beautiful! Today’s your day to sparkle.",
+        "The sun is up, and so is my love for you.",
+        "Morning coffee and your smile are all I need.",
+        "Each morning with you is a fresh new blessing.",
+        "You make mornings magical just by being you.",
+        "Wake up, sunshine! The world awaits your light.",
+        "Every morning is brighter with your laughter.",
+        "Good morning! You’re the sweetest part of my day.",
+        "Let today be full of joy and your beautiful smile.",
+        // ... add 40 more compliments for morning mood here
+        "You are the reason mornings feel so warm.",
+        "Your energy fuels my entire day.",
+        "The morning breeze carries your kindness.",
+        "Waking up to you is my favorite moment.",
+        "Your beauty shines with the morning light.",
+        "Today is better because of you.",
+        "Your smile is my morning sunshine.",
+        "Every dawn is sweeter when I think of you.",
+        "Morning hugs from me to you!",
+        "You brighten the world with every sunrise.",
+        "Your laugh makes the morning melody.",
+        "You’re my favorite morning thought.",
+        "Start your day knowing you are loved.",
+        "Mornings are made for you and me.",
+        "You inspire me every new day.",
+        "Your warmth fills the morning air.",
+        "Today is a gift, just like you.",
+        "Your spirit wakes up my heart.",
+        "Good morning to the most wonderful you.",
+        "You make every morning a celebration.",
+        "Your light outshines the rising sun.",
+        "Start your day with a smile, beautiful.",
+        "You are the sweetest part of the morning.",
+        "Rise up and know you are amazing.",
+        "The day is brighter with your love.",
+        "Morning thoughts of you make me smile.",
+        "You are my sunshine every day.",
+        "Wake up and be your beautiful self.",
+        "You are loved beyond measure, morning and night.",
+        "Your kindness shines with the morning dew.",
+        "Every morning is a fresh start with you.",
+        "You make life’s mornings extraordinary.",
+        "Your beauty radiates with every sunrise.",
+        "The morning sun envies your glow.",
+        "You are the light that starts my day.",
+        "Good morning, my heart’s delight.",
+        "Your smile is the best morning gift.",
+        "Today will be amazing, just like you.",
+        "Your laughter wakes up my soul.",
+        "Every morning is perfect because of you.",
+        "You inspire joy in every sunrise.",
+        "You make mornings worth waking up for.",
+        "Your love is my morning motivation.",
+        "Good morning, my sweet sunshine.",
+        "The day begins with your beautiful smile.",
+        "You are my morning miracle.",
+        "You brighten my world every morning."
+      ],
+      night: [
+        "Good night, Puçi! Dream sweetly of all our moments.",
+        "Rest well, my love — tomorrow is another day to shine.",
+        "You light up my nights with your beautiful soul.",
+        "Sleep tight, knowing you are deeply loved.",
+        "May your dreams be as lovely as you are.",
+        "Nighttime is sweeter with you in my thoughts.",
+        "You are my star that never fades at night.",
+        "Rest easy, beautiful, you deserve all the peace.",
+        "Good night! Tomorrow is full of new hugs and smiles.",
+        "Your heart is my favorite place to rest at night.",
+        // ... add 40 more compliments for night mood here
+        "Close your eyes and feel my love surround you.",
+        "Sleep well and wake up even more amazing.",
+        "You’re the calm in my night storm.",
+        "Your dreams are where I meet you.",
+        "Night’s magic is in your smile.",
+        "The moon shines just for you tonight.",
+        "Rest peacefully, my beautiful star.",
+        "You make the night sky brighter.",
+        "Good night, my sweetest dream.",
+        "You are the peace in my night.",
+        "May your sleep be deep and restorative.",
+        "Dream of all the joy you bring.",
+        "You are my night’s gentle whisper.",
+        "Sleep wrapped in love and warmth.",
+        "Your heart is the light in the dark.",
+        "Tomorrow holds all the happiness you deserve.",
+        "Rest knowing you are cherished.",
+        "Good night, my love and light.",
+        "May your dreams be filled with joy.",
+        "Your spirit shines brightest in the dark.",
+        "Sleep soundly, knowing you’re adored.",
+        "You bring magic to my nights.",
+        "Good night to my favorite person.",
+        "May your sleep be full of peace.",
+        "Your love is my nightly comfort.",
+        "Dream sweetly of our love story.",
+        "Rest well, beautiful soul.",
+        "Your smile is my night’s star.",
+        "You make every night special.",
+        "Good night, my heart’s treasure.",
+        "Sleep tight, my beautiful light.",
+        "Your presence makes the night calm.",
+        "Dream of love, laughter, and joy.",
+        "You are my night’s sweetest song.",
+        "Rest easy and know you’re loved.",
+        "Good night, my shining star.",
+        "May your dreams be as beautiful as you.",
+        "Your love is the light in the dark.",
+        "Sleep well, my beautiful Puçi.",
+        "You make my nights magical.",
+        "Good night, my forever love.",
+        "Rest peacefully, knowing you are loved.",
+        "Your heart beats in my dreams.",
+        "Dream of all the love we share.",
+        "Sleep tight, beautiful soul.",
+        "You are my night’s calm and joy.",
+        "Good night and sweet dreams.",
+        "Your love lights up my nights.",
+        "Rest well, my darling."
+      ],
+      blush: [
+        "Every time you smile, my heart does a little dance.",
+        "You’re the reason I blush and smile all day.",
+        "You have that kind of beauty that makes me lose words.",
+        "Your eyes sparkle with the sweetest mischief.",
+        "You make my heart skip beats with just a glance.",
+        "You’re cuter than a puppy on a sunny day.",
+        "Your laugh is my favorite sound in the world.",
+        "You have a smile that could light up the darkest room.",
+        "Being around you makes my cheeks turn rosy.",
+        "You’re the cutest secret I love to keep.",
+        // ... add 40 more compliments for blush mood here
+        "You make me blush just thinking about you.",
+        "Your kindness makes my heart flutter.",
+        "You’re sweeter than the sweetest candy.",
+        "You have the most adorable quirks.",
+        "Your charm is utterly irresistible.",
+        "You light up the room with your presence.",
+        "Your smile is pure magic to me.",
+        "You’re the cutest dream I never want to wake from.",
+        "Your beauty takes my breath away.",
+        "You make my heart race and blush.",
+        "You’re more adorable than words can say.",
+        "Your laugh is my favorite melody.",
+        "You have a sparkle that’s uniquely yours.",
+        "You make every moment feel special.",
+        "Your eyes tell the sweetest stories.",
+        "You’re the blush on my cheeks and the warmth in my heart.",
+        "You make me feel like the luckiest person alive.",
+        "Your smile is my daily dose of happiness.",
+        "You’re as sweet as a bouquet of roses.",
+        "You have the cutest smile I’ve ever seen.",
+        "You’re my favorite reason to blush.",
+        "Your charm leaves me speechless.",
+        "You make my world brighter and rosier.",
+        "Your happiness is contagious and adorable.",
+        "You have the most heart-melting smile.",
+        "You’re the sweetest surprise in my life.",
+        "Your eyes shine with the purest joy.",
+        "You make me blush in the best way.",
+        "Your laughter brightens even the gloomiest days.",
+        "You’re the reason for my rosy cheeks.",
+        "Your beauty shines inside and out.",
+        "You have a smile that could stop time.",
+        "You’re the cutest person I know.",
+        "Your presence makes my heart flutter.",
+        "You make every day feel like a fairytale.",
+        "Your blush is the color of my happiness.",
+        "You’re my sweetest addiction.",
+        "Your smile warms my soul.",
+        "You make me blush and smile at the same time.",
+        "Your kindness makes you irresistibly adorable.",
+        "You’re the cutest thing in my world.",
+        "Your charm brightens every moment.",
+        "You make my heart beat faster and softer.",
+        "You’re the blush on my favorite memories.",
+        "Your smile is the sweetest gift.",
+        "You have a heart full of adorable surprises.",
+        "You make my world more beautiful.",
+        "Your laughter is the music to my heart.",
+        "You’re the reason I smile without reason."
+      ],
+      poetic: [
+        "Your soul is a garden where my heart blooms.",
+        "In your eyes, I see the poetry of the universe.",
+        "You are the melody in my silent symphony.",
+        "Every word you speak is a verse of love.",
+        "You paint my world with colors of your spirit.",
+        "Your presence is a sonnet written in light.",
+        "With you, even time stops to admire the moment.",
+        "You are the muse of my every dream and thought.",
+        "Our love is a poem written by stars.",
+        "You are the rhythm that beats within my chest.",
+        // ... add 40 more compliments for poetic mood here
+        "Your laughter is the sweetest rhyme.",
+        "You are the dawn breaking my endless night.",
+        "In your smile, I find endless verses of joy.",
+        "You are the whisper of the wind through the trees.",
+        "Your love flows like a river through my soul.",
+        "You are the fire that warms my coldest days.",
+        "Every moment with you is a stanza of bliss.",
+        "You shine brighter than a thousand suns in my sky.",
+        "Your touch writes poetry on my skin.",
+        "You are the echo of my heart’s deepest song.",
+        "In your eyes, galaxies come alive.",
+        "You are the light that guides my wandering soul.",
+        "Our love is a dance of stars and moonlight.",
+        "You are the verse that completes my poem.",
+        "Your voice is the music of the morning breeze.",
+        "With you, life is a canvas of endless beauty.",
+        "Your heart beats in perfect rhythm with mine.",
+        "You are the poet of my wildest dreams.",
+        "Your smile ignites the fire of creation within me.",
+        "In your embrace, I find eternal verses of peace.",
+        "You are the ink that colors my story.",
+        "Every glance from you is a brushstroke of love.",
+        "Your love is the sonnet my soul longs to sing.",
+        "You are the moonlight on my darkest nights.",
+        "Your presence fills the pages of my heart.",
+        "With you, every day is a poem yet to be written.",
+        "Your laughter is the chorus of my happiest days.",
+        "You are the muse that inspires my every breath.",
+        "Your touch is the stanza I want to repeat forever.",
+        "You paint my world with dreams and hopes.",
+        "In your eyes, I find the universe’s secrets.",
+        "Your heart is the poem I cherish most.",
+        "You are the rhythm of my heartbeat’s song.",
+        "Every moment with you is a masterpiece of love.",
+        "Your love writes the story of my soul.",
+        "You are the light in my poetic night.",
+        "Your smile is the verse that brightens my day.",
+        "With you, life is a beautiful poem unfolding.",
+        "You are the melody that completes my symphony.",
+        "Your presence is the art in my world.",
+        "You are the poet’s dream come true.",
+        "Your love is the ink in my soul’s pen.",
+        "Every word you speak is music to my heart.",
+        "You are the muse that fills my dreams.",
+        "Your touch is the poem I live to feel.",
+        "In your arms, I find my favorite verse.",
+        "You are the light that inspires my poetry.",
+        "Your heart sings the song of my soul.",
+        "With you, every moment is poetry in motion."
+      ],
+      funny: [
+        "If being adorable was a crime, you’d be serving a life sentence.",
+        "You must be tired because you’ve been running through my mind all day!",
+        "Are you a magician? Because whenever I look at you, everyone else disappears.",
+        "You’re like a software update — you make everything better, even if I don’t always want it.",
+        "If you were a vegetable, you’d be a cute-cumber!",
+        "I’d tell you a joke about pizza, but it’s a little cheesy — just like you!",
+        "Are you a parking ticket? Because you’ve got ‘fine’ written all over you.",
+        "You must be a Wi-Fi signal — because I’m feeling a connection.",
+        "I’m not a photographer, but I can definitely picture us together.",
+        "You’re sweeter than the last slice of cake.",
+        // ... add 40 more compliments for funny mood here
+        "Are you a time traveler? Because I see you in my future.",
+        "You make my heart race faster than my internet speed.",
+        "If you were a fruit, you’d be a ‘fine-apple.’",
+        "I must be a snowflake, because I’ve fallen for you.",
+        "You’re like my favorite meme — always making me smile.",
+        "Are you a campfire? Because you’re hot and I want s’more.",
+        "You’re the reason my phone battery lasts longer — you brighten my day.",
+        "If kisses were snowflakes, I’d send you a blizzard.",
+        "You’re like a cookie — sweet and irresistible.",
+        "Are you a cat? Because you’re purr-fect.",
+        "You light up my world like a glow stick at a party.",
+        "Are you made of copper and tellurium? Because you’re Cu-Te.",
+        "You must be a ninja — because you sneak into my heart.",
+        "If you were a superhero, your power would be stealing hearts.",
+        "You’re my favorite notification.",
+        "You’re like coffee — I can’t start my day without you.",
+        "Are you a dictionary? Because you add meaning to my life.",
+        "You make my life as fun as a roller coaster ride.",
+        "You’re the jelly to my peanut butter.",
+        "If you were a song, you’d be my favorite jam.",
+        "You’re my human version of a double rainbow.",
+        "Are you a flashlight? Because you brighten my darkest moments.",
+        "You’re the sprinkles on my ice cream.",
+        "You make my heart do the cha-cha.",
+        "If you were a dance move, you’d be the perfect two-step.",
+        "You’re the reason I smile at my phone like a weirdo.",
+        "Are you a garden? Because you make everything grow better.",
+        "You’re the best thing since sliced bread.",
+        "You light up my life like a neon sign.",
+        "If you were a cartoon character, you’d be my favorite hero.",
+        "You make my days as fun as a theme park.",
+        "Are you a balloon? Because you lift me up.",
+        "You’re my favorite kind of crazy.",
+        "You make me laugh like a sitcom audience.",
+        "If you were a joke, you’d be the funniest one.",
+        "You’re the peanut butter to my jelly.",
+        "You brighten my day like a disco ball.",
+        "Are you a puzzle? Because you complete me.",
+        "You make my life as exciting as a treasure hunt.",
+        "You’re the cheese to my macaroni.",
+        "If you were a game, you’d be my favorite level.",
+        "You make my heart bounce like a trampoline.",
+        "Are you a rainbow? Because you color my world.",
+        "You’re the icing on my cake.",
+        "You make me smile like a kid in a candy store.",
+        "If you were a joke, I’d tell it all day.",
+        "You’re the sparkle in my eye.",
+        "You make every moment a comedy show.",
+        "You’re the best punchline to my life.",
+        "If you were a meme, you’d go viral in my heart."
+      ]
+    };
 
     const button = document.getElementById("complimentBtn");
     const display = document.getElementById("compliment");
+    const moodSelector = document.getElementById("moodSelector");
 
+    // Display compliment based on selected mood
     button.addEventListener("click", () => {
-      const randomIndex = Math.floor(Math.random() * compliments.length);
+      const mood = moodSelector.value;
+      const list = compliments[mood];
+      if (!list || list.length === 0) {
+        display.textContent = "No compliments available for this mood.";
+        display.style.opacity = 1;
+        return;
+      }
+      const randomIndex = Math.floor(Math.random() * list.length);
       display.style.opacity = 0;
       setTimeout(() => {
-        display.textContent = compliments[randomIndex];
+        display.textContent = list[randomIndex];
         display.style.opacity = 1;
       }, 300);
     });
 
-    // Gift logic
+    // Gift box logic from original
     const giftSection = document.getElementById("gift-section");
     const giftBox = document.getElementById("gift-box");
     const giftMessage = document.getElementById("gift-message");
 
-   const giftOpenedAt = localStorage.getItem("giftOpenedAt");
-const now = Date.now();
-const sevenDays = 7 * 24 * 60 * 60 * 1000;
-
-if (giftOpenedAt && (now - parseInt(giftOpenedAt, 10)) < sevenDays) {
-  // Less than 7 days have passed, hide the gift
-  giftSection.style.display = "none";
-} else {
-  // Show gift and attach event
-  giftBox.addEventListener("click", () => {
-    giftBox.classList.add("clicked");
-
-    setTimeout(() => {
-  // Always set message from current code (GitHub)
-  giftMessage.textContent = "Kidi's Heart!!!"; // CHANGEABLE ANYTIME
-  giftMessage.style.display = "block";
-  playSound();
-  createConfetti(30);
-  createHearts(20);
-}, 500);
-
-
-    setTimeout(() => {
+    if (localStorage.getItem("giftOpened") === "true") {
       giftSection.style.display = "none";
-      localStorage.setItem("giftOpenedAt", Date.now().toString());
-    }, 3500);
-  });
-}
+    } else {
+      giftBox.addEventListener("click", () => {
+        giftBox.classList.add("clicked");
+
+        setTimeout(() => {
+          giftMessage.style.display = "block";
+          playSound();
+          createConfetti(30);
+          createHearts(20);
+        }, 500);
+
+        setTimeout(() => {
+          giftSection.style.display = "none";
+          localStorage.setItem("giftOpened", "true");
+        }, 3500);
+      });
+    }
 
     function playSound() {
       const audio = new Audio("https://www.myinstants.com/media/sounds/magic-chime.mp3");
