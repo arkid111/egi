@@ -383,25 +383,31 @@
     const giftBox = document.getElementById("gift-box");
     const giftMessage = document.getElementById("gift-message");
 
-    if (localStorage.getItem("giftOpened") === "true") {
+   const giftOpenedAt = localStorage.getItem("giftOpenedAt");
+const now = Date.now();
+const sevenDays = 7 * 24 * 60 * 60 * 1000;
+
+if (giftOpenedAt && (now - parseInt(giftOpenedAt, 10)) < sevenDays) {
+  // Less than 7 days have passed, hide the gift
+  giftSection.style.display = "none";
+} else {
+  // Show gift and attach event
+  giftBox.addEventListener("click", () => {
+    giftBox.classList.add("clicked");
+
+    setTimeout(() => {
+      giftMessage.style.display = "block";
+      playSound();
+      createConfetti(30);
+      createHearts(20);
+    }, 500);
+
+    setTimeout(() => {
       giftSection.style.display = "none";
-    } else {
-      giftBox.addEventListener("click", () => {
-        giftBox.classList.add("clicked");
-
-        setTimeout(() => {
-          giftMessage.style.display = "block";
-          playSound();
-          createConfetti(30);
-          createHearts(20);
-        }, 500);
-
-        setTimeout(() => {
-          giftSection.style.display = "none";
-          localStorage.setItem("giftOpened", "true");
-        }, 3500);
-      });
-    }
+      localStorage.setItem("giftOpenedAt", Date.now().toString());
+    }, 3500);
+  });
+}
 
     function playSound() {
       const audio = new Audio("https://www.myinstants.com/media/sounds/magic-chime.mp3");
