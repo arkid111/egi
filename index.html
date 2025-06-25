@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,14 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>PUÇI</title>
 
-  <!-- iPhone Home Screen App -->
+  <!-- iPhone Web App Setup -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="PUÇI" />
-
-  <!-- Icon -->
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-  <link rel="icon" href="favicon.ico" type="image/x-icon" />
 
   <style>
     html, body {
@@ -22,9 +18,15 @@
       height: 100%;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
       background: linear-gradient(135deg, #fff0f6, #ffe6f0);
-      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      text-align: center;
     }
 
+    /* Splash screen */
     #splash {
       position: fixed;
       top: 0; left: 0;
@@ -55,7 +57,8 @@
 
     h1 {
       color: #d6336c;
-      margin-bottom: 10px;
+      margin-top: 20px;
+      font-size: 2rem;
     }
 
     button {
@@ -80,7 +83,6 @@
       font-size: 1.6rem;
       color: #5a0b2f;
       max-width: 600px;
-      text-align: center;
       min-height: 100px;
       opacity: 0;
       transition: opacity 0.6s ease;
@@ -88,13 +90,7 @@
 
     #gift-section {
       text-align: center;
-      margin-bottom: 40px;
-    }
-
-    #gift-section h2 {
-      color: #d6336c;
-      font-size: 1.5rem;
-      margin-bottom: 15px;
+      margin-top: 30px;
     }
 
     #gift-box {
@@ -137,67 +133,232 @@
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
-  
-    /* Center content vertically and horizontally */
-    body {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
 
-    /* Decorative background symbols */
-    body::before {
-      content: "🌸 💖 🌼 💕 🌷";
+    .confetti, .heart {
       position: fixed;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 2rem;
-      opacity: 0.3;
-      z-index: 0;
-      pointer-events: none;
+      width: 20px;
+      height: 20px;
+      animation: fall 3s linear forwards;
+      z-index: 9999;
     }
 
-    body::after {
-      content: "🌹 💗 🌻 💞 🌺";
-      position: fixed;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 2rem;
-      opacity: 0.3;
-      z-index: 0;
-      pointer-events: none;
+    .confetti {
+      background: radial-gradient(circle, #ff4081, #ff80ab);
+      border-radius: 50%;
     }
 
-    h1, button, #compliment, #gift-section {
-      z-index: 1;
+    .heart {
+      background: url('https://emojiapi.dev/api/v1/2764.png') no-repeat center;
+      background-size: cover;
     }
-    
+
+    @keyframes fall {
+      from { top: -20px; opacity: 1; }
+      to { top: 100vh; opacity: 0; }
+    }
+  </style>
 </head>
 <body>
-  <!-- Splash Screen -->
-  <div id="splash">
-    <h1>WELCOME SWEETHEART!</h1>
-  </div>
+  <!-- Splash -->
+  <div id="splash"><h1>WELCOME SWEETHEART!</h1></div>
 
-  <!-- Gift Section -->
+  <!-- Gift Box -->
   <div id="gift-section">
-    <h2>THERE’S A GIFT FOR YOU</h2>
+    <h2>THERE'S A GIFT FOR YOU</h2>
     <div id="gift-box"></div>
     <div id="gift-message">Kidi’s Heart ❤️</div>
   </div>
 
-  <!-- Main Compliment Interface -->
-  <h1>Need a Compliment, Puçi?</h1>
-  <button id="complimentBtn">Click Here!💕</button>
+  <!-- Compliment -->
+  <h1>Hey Puçi, need a compliment?</h1>
+  <button id="complimentBtn">Click Here! 💕</button>
   <div id="compliment"></div>
 
-  <!-- JavaScript -->
+  <!-- Script -->
   <script>
-    const compliments = [ "Puçi, you have the most beautiful smile.", "Puçi, your laugh brightens my day.", "Puçi, you're my favorite person in the world.", "Puçi, every moment with you is magical.", "Puçi, you make life so much better.", "Puçi, you're stunning inside and out.", "Puçi, I love how kind you are.", "Puçi, you're my sunshine on cloudy days.", "Puçi, your creativity inspires me.", "Puçi, you have a heart of gold." ];
-    
+    const compliments = [
+      "Puçi, you have the most beautiful smile.",
+      "Puçi, your laugh brightens my day.",
+      "Puçi, you're my favorite person in the world.",
+      "Puçi, every moment with you is magical.",
+      "Puçi, you're stunning inside and out.",
+      "Puçi, you bring joy just by being you.",
+      "Puçi, you have the most beautiful smile.",
+      "Puçi, your laugh brightens my day.",
+      "Puçi, you're my favorite person in the world.",
+      "Puçi, every moment with you is magical.",
+      "Puçi, you make life so much better.",
+      "Puçi, you're stunning inside and out.",
+      "Puçi, I love how kind you are.",
+      "Puçi, you're my sunshine on cloudy days.",
+      "Puçi, your creativity inspires me.",
+      "Puçi, you have a heart of gold.",
+      "Puçi, your presence is calming and comforting.",
+      "Puçi, you are incredibly thoughtful.",
+      "Puçi, you always know how to make me smile.",
+      "Puçi, you are brave and strong.",
+      "Puçi, you bring out the best in people.",
+      "Puçi, your smile lights up any room.",
+      "Puçi, you are deeply loved.",
+      "Puçi, your energy is contagious in the best way.",
+      "Puçi, you are so talented and capable.",
+      "Puçi, you make the world a better place.",
+      "Puçi, I admire your passion and dedication.",
+      "Puçi, your kindness is your superpower.",
+      "Puçi, you have a beautiful soul.",
+      "Puçi, you inspire me to be better every day.",
+      "Puçi, you are my favorite hello and hardest goodbye.",
+      "Puçi, you are enough just as you are.",
+      "Puçi, your laughter is my favorite sound.",
+      "Puçi, you are a wonderful friend and partner.",
+      "Puçi, I am grateful for every moment with you.",
+      "Puçi, you make ordinary moments extraordinary.",
+      "Puçi, you have an amazing sense of humor.",
+      "Puçi, you are courageous beyond words.",
+      "Puçi, you deserve all the happiness in the world.",
+      "Puçi, you make life colorful and bright.",
+      "Puçi, you are an amazing listener.",
+      "Puçi, you have a beautiful mind.",
+      "Puçi, your hugs are the best place to be.",
+      "Puçi, you are a treasure to those who know you.",
+      "Puçi, you are more powerful than you think.",
+      "Puçi, your smile is pure magic.",
+      "Puçi, you are the reason for so many smiles.",
+      "Puçi, you have a heart that shines.",
+      "Puçi, you make the impossible possible.",
+      "Puçi, you are a bright star in my life.",
+      "Puçi, you are my favorite thought every day.",
+      "Puçi, you bring joy just by being you.",
+      "Puçi, your kindness touches everyone you meet.",
+      "Puçi, your intelligence shines brightly.",
+      "Puçi, your passion is truly inspiring.",
+      "Puçi, you have a unique way of making people feel special.",
+      "Puçi, your smile can brighten the darkest days.",
+      "Puçi, your strength amazes me every day.",
+      "Puçi, you have a heart full of love and compassion.",
+      "Puçi, your energy lights up the room.",
+      "Puçi, you always know how to cheer me up.",
+      "Puçi, your laughter is contagious and beautiful.",
+      "Puçi, you are graceful in everything you do.",
+      "Puçi, your dreams inspire me to dream bigger.",
+      "Puçi, you have an incredible sense of style.",
+      "Puçi, your honesty is refreshing and rare.",
+      "Puçi, you are the definition of elegance.",
+      "Puçi, your spirit is unbreakable.",
+      "Puçi, you have the best ideas and creativity.",
+      "Puçi, your presence makes everything better.",
+      "Puçi, you are a blessing to everyone around you.",
+      "Puçi, you make ordinary days extraordinary.",
+      "Puçi, your confidence is admirable.",
+      "Puçi, you are truly one of a kind.",
+      "Puçi, your optimism is inspiring.",
+      "Puçi, you light up my world.",
+      "Puçi, your smile is a ray of sunshine.",
+      "Puçi, you have a heart as big as the universe.",
+      "Puçi, you are gentle yet strong.",
+      "Puçi, your courage motivates me.",
+      "Puçi, you have an amazing way of connecting with people.",
+      "Puçi, your kindness makes the world better.",
+      "Puçi, you are full of wonderful surprises.",
+      "Puçi, your soul shines bright.",
+      "Puçi, you are loved more than words can say.",
+      "Puçi, your laugh is music to my ears.",
+      "Puçi, you are the light in my life.",
+      "Puçi, you inspire kindness in others.",
+      "Puçi, you are the most beautiful person I know.",
+      "Puçi, your heart is pure gold.",
+      "Puçi, you have a brilliant mind.",
+      "Puçi, your smile brings me peace.",
+      "Puçi, you are the greatest gift.",
+      "Puçi, your laughter warms my soul.",
+      "Puçi, you are truly radiant.",
+      "Puçi, your compassion knows no bounds.",
+      "Puçi, you are an incredible listener.",
+      "Puçi, you make every moment memorable.",
+      "Puçi, your spirit is contagious.",
+      "Puçi, you are my source of happiness.",
+      "Puçi, your strength amazes me.",
+      "Puçi, you are my endless inspiration.",
+      "Puçi, your smile is everything to me.",
+      "Puçi, you are my sunshine every day.",
+      "Puçi, your kindness changes lives.",
+      "Puçi, you are the heart of everything good.",
+      "Puçi, you have the most amazing soul.",
+      "Puçi, you inspire me to be the best I can be.",
+      "Puçi, your love fills my heart.",
+      "Puçi, you are my everything.",
+      "Puçi, your laughter is the sweetest sound.",
+      "Puçi, you are a shining star in my life.",
+      "Puçi, your spirit is unstoppable.",
+      "Puçi, you have the most beautiful soul.",
+      "Puçi, your love is a gift I cherish.",
+      "Puçi, you are my forever and always.",
+      "Puçi, your smile lights up my darkest days.",
+      "Puçi, you are the joy in my life.",
+      "Puçi, your courage inspires me every day.",
+      "Puçi, you are my best friend and love.",
+      "Puçi, your kindness brightens the world.",
+      "Puçi, you make every day special.",
+      "Puçi, your heart is full of love.",
+      "Puçi, you are the light in my darkness.",
+      "Puçi, your spirit is full of grace.",
+      "Puçi, you are a treasure beyond measure.",
+      "Puçi, your smile is the key to my happiness.",
+      "Puçi, you are a beautiful soul inside and out.",
+      "Puçi, your love lifts me up.",
+      "Puçi, you make the world a better place.",
+      "Puçi, your laughter is my favorite melody.",
+      "Puçi, you are my heart’s delight.",
+      "Puçi, your spirit shines brighter than stars.",
+      "Puçi, you are my greatest blessing.",
+      "Puçi, your smile is pure magic.",
+      "Puçi, you are the light of my life.",
+      "Puçi, your kindness touches my heart.",
+      "Puçi, you are a gift I cherish forever.",
+      "Puçi, your love is endless and true.",
+      "Puçi, you make every moment magical.",
+      "Puçi, your spirit is beautiful and strong.",
+      "Puçi, you are my heart and soul.",
+      "Puçi, your laughter brings joy to my life.",
+      "Puçi, you are my forever sunshine.",
+      "Puçi, your love is my safe haven.",
+      "Puçi, you brighten every day with your smile.",
+      "Puçi, you are my inspiration and joy.",
+      "Puçi, your kindness knows no limits.",
+      "Puçi, you are my heart’s greatest treasure.",
+      "Puçi, your smile is a blessing to all.",
+      "Puçi, you are my endless source of happiness.",
+      "Puçi, your spirit is as beautiful as you.",
+      "Puçi, you make life so much brighter.",
+      "Puçi, your love fills every corner of my heart.",
+      "Puçi, you are my light in the dark.",
+      "Puçi, your laughter is the sweetest gift.",
+      "Puçi, you are my constant source of joy.",
+      "Puçi, your kindness makes the world shine.",
+      "Puçi, you are my forever and always.",
+      "Puçi, your smile is the sunshine of my life.",
+      "Puçi, you inspire me beyond words.",
+      "Puçi, your love is a beacon of hope.",
+      "Puçi, you are the light that guides me.",
+      "Puçi, your spirit is full of love and light.",
+      "Puçi, you are my heart’s true joy.",
+      "Puçi, your laughter is my favorite sound.",
+      "Puçi, you brighten every moment we share.",
+      "Puçi, your kindness is unmatched and beautiful.",
+      "Puçi, you are the reason for my smiles.",
+      "Puçi, your love makes everything better.",
+      "Puçi, you are my heart’s eternal flame.",
+      "Puçi, your smile is the most beautiful thing I see.",
+      "Puçi, you are my forever love.",
+      "Puçi, your spirit shines brighter than the stars.",
+      "Puçi, you are my greatest happiness.",
+      "Puçi, your laughter fills my heart with joy.",
+      "Puçi, you are my light and my love.",
+      "Puçi, your kindness warms my soul.",
+      "Puçi, you are the most beautiful person I know.",
+      "Puçi, your smile lights up my world."
+    ];
+
     const button = document.getElementById("complimentBtn");
     const display = document.getElementById("compliment");
 
@@ -210,6 +371,7 @@
       }, 300);
     });
 
+    // Gift logic
     const giftSection = document.getElementById("gift-section");
     const giftBox = document.getElementById("gift-box");
     const giftMessage = document.getElementById("gift-message");
@@ -219,14 +381,44 @@
     } else {
       giftBox.addEventListener("click", () => {
         giftBox.classList.add("clicked");
+
         setTimeout(() => {
           giftMessage.style.display = "block";
-        }, 400);
+          playSound();
+          createConfetti(30);
+          createHearts(20);
+        }, 500);
+
         setTimeout(() => {
           giftSection.style.display = "none";
           localStorage.setItem("giftOpened", "true");
-        }, 3000);
+        }, 3500);
       });
+    }
+
+    function playSound() {
+      const audio = new Audio("https://www.myinstants.com/media/sounds/magic-chime.mp3");
+      audio.play();
+    }
+
+    function createConfetti(amount) {
+      for (let i = 0; i < amount; i++) {
+        const confetti = document.createElement("div");
+        confetti.className = "confetti";
+        confetti.style.left = Math.random() * 100 + "vw";
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 3000);
+      }
+    }
+
+    function createHearts(amount) {
+      for (let i = 0; i < amount; i++) {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.style.left = Math.random() * 100 + "vw";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 3000);
+      }
     }
   </script>
 </body>
