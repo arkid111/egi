@@ -137,7 +137,44 @@
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
-  </style>
+  
+    /* Center content vertically and horizontally */
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Decorative background symbols */
+    body::before {
+      content: "🌸 💖 🌼 💕 🌷";
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2rem;
+      opacity: 0.3;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    body::after {
+      content: "🌹 💗 🌻 💞 🌺";
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2rem;
+      opacity: 0.3;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    h1, button, #compliment, #gift-section {
+      z-index: 1;
+    }
+    
 </head>
 <body>
   <!-- Splash Screen -->
