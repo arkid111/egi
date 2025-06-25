@@ -3,21 +3,104 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Puçi</title>
-  
-  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <title>PUÇI</title>
 
+  <!-- iPhone Home Screen App -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Puçi Compliments" />
-  
-  <!-- your existing styles -->
+  <meta name="apple-mobile-web-app-title" content="PUÇI" />
+
+  <!-- Icon -->
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      background: linear-gradient(135deg, #fff0f6, #ffe6f0);
+      overflow: hidden;
+    }
+
+    #splash {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: #ffb3c6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      animation: fadeOut 1s ease-in-out 3s forwards;
+    }
+
+    #splash h1 {
+      color: white;
+      font-size: 2.5rem;
+      animation: fadeInUp 1s ease-in-out;
+      text-align: center;
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+
+    h1 {
+      color: #d6336c;
+      margin-bottom: 10px;
+    }
+
+    button {
+      background-color: #d6336c;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 5px 15px rgba(214, 51, 108, 0.3);
+    }
+
+    button:hover {
+      background-color: #a8274e;
+    }
+
+    #compliment {
+      margin-top: 30px;
+      font-size: 1.6rem;
+      color: #5a0b2f;
+      max-width: 600px;
+      text-align: center;
+      min-height: 100px;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+  </style>
 </head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Puçi</title>
 <style>
   body {
+    
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
       Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
     background: linear-gradient(135deg, #fff0f6, #ffe6f0);
@@ -62,10 +145,17 @@
 </style>
 </head>
 <body>
+  <!-- Splash Screen that shows for 3 seconds -->
+  <div id="splash">
+    <h1>WELCOME SWEETHEART!</h1>
+  </div>
+
+  <!-- Main Compliment Interface -->
   <h1>Need a Compliment, Puçi?</h1>
   <button id="complimentBtn">Click Here!💕</button>
   <div id="compliment"></div>
 
+  <!-- JavaScript -->
   <script>
     const compliments = [
       "Puçi, you have the most beautiful smile.",
